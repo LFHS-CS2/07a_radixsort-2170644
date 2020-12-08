@@ -1,6 +1,8 @@
 import java.util.*;
 public class Radix
 {
+
+
     /** 
      * postcondition:  returns kth digit of number
      */
@@ -23,7 +25,19 @@ public class Radix
      */ 
     private static Queue[] itemsToQueues(int[] nums, int k)
     {
-        return null;
+        
+        Queue[] qArray = new Queue[10];
+        for(int i = 0; i < 10; i++) {
+          Queue q = new LinkedList();
+          qArray[i] = q;
+        }
+         // you need to make an array of 10 queues  10 for 0,1,2,3,4,5,6,7,8,9
+        // They are all null
+        for(int i : nums){
+          int num = getDigit(i, k);
+          qArray[num].add(i);
+        }
+        return qArray;
     }
 
     /**
@@ -36,7 +50,15 @@ public class Radix
 
     private static int[] queuesToArray(Queue[] ques, int numVals)
     {
-        return null;
+        
+        int[] arr = new int[numVals];
+        int i = 0;
+        for(Queue q : ques) {
+          while(!q.isEmpty()) {
+            arr[i++] = (int)q.remove(); 
+          }
+        }
+        return arr;
     }
 
     /**
@@ -48,6 +70,11 @@ public class Radix
 
     public static int[] sort(int[] nums, int numDigits)
     {
+     
+        for(int i = 0; i < numDigits; i++) {
+          
+          nums = queuesToArray(itemsToQueues(nums, i), nums.length);
+        }
         return nums;
     }
 
